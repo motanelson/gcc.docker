@@ -1,6 +1,6 @@
-FROM  python:latest
+FROM  gcc:latest
 
-COPY predict.py /predict.py
-RUN chmod +x /predict.py
-RUN pip3 install matplotlib scipy
-CMD ["python3","./predict.py"]
+COPY hello.c /hello.c
+RUN chmod +x /hello.c
+RUN gcc hello.c -o hello
+CMD ["./hello"]
