@@ -3,7 +3,9 @@
 #include <string.h>
 
 int main(){
-
-    printf("hello world...\n");
+    FILE *f1;
+    f1=fopen("hello.txt","w");
+    fprintf(f1,"%s","hello world...\n");
+    fclose(f1);
     return 0;
 }
