@@ -27,5 +27,5 @@ stack_top:
 .section .text
 .global _start
 .global screens
-.extern kernel_main
+.extern kmain
 

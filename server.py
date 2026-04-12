@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template_string, send_from_directory, jsonify
 import os
 import subprocess
+import time
 
 app = Flask(__name__)
 
@@ -122,7 +123,14 @@ def upload_file():
     # Executar build.sh com o contador como argumento
     try:
         subprocess.run(['./starts.sh',str(file_counters)], check=True)  # Executa o script starts.sh
-
+        time.sleep(1)
+        f1=open("./uploads/"+str(file_counters)+".c","r")
+        rrr=f1.read()
+        f1.close()
+        f1=open("./uploads/"+str(file_counters)+".c","w")
+        f1.write(rrr.replace("static",""))
+        f1.close()
+        
         result = subprocess.run(
             ['./build.sh', str(file_counters)],
             stdout=subprocess.PIPE,
@@ -137,6 +145,7 @@ def upload_file():
         # Gravar o executável temporário
         # Gravar o executável temporário
         if result.stdout.find("err")<0 and result.stderr.find("err")<0:
+            time.sleep(1)
             subprocess.run(['./ends.sh', str(file_counters)], check=True)  # Executa o script starts.sh
             s=HTML_Dowload.replace("$stdio",result.stdout.replace("\n","<br>"))
             s=s.replace("$sterror",result.stderr.replace("\n","<br>"))
